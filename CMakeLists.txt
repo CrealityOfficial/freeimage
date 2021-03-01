@@ -1,0 +1,98 @@
+set(FREE_IMAGE_HAS_TIFF 0)
+
+set(freeImageRoot ${CMAKE_CURRENT_SOURCE_DIR})
+set(freeImageSrcs FreeImage/Conversion.cpp
+				  FreeImage/Conversion4.cpp
+				  FreeImage/Conversion8.cpp
+				  FreeImage/Conversion16_555.cpp
+				  FreeImage/Conversion16_565.cpp
+				  FreeImage/Conversion24.cpp
+				  FreeImage/Conversion32.cpp
+				  FreeImage/ConversionFloat.cpp
+				  FreeImage/ConversionRGB16.cpp
+				  FreeImage/ConversionRGBA16.cpp
+				  FreeImage/ConversionRGBAF.cpp
+				  FreeImage/ConversionRGBF.cpp
+				  FreeImage/ConversionType.cpp
+				  FreeImage/ConversionUINT16.cpp
+				  FreeImage/Halftoning.cpp
+				  FreeImage/tmoColorConvert.cpp
+				  FreeImage/tmoDrago03.cpp
+				  FreeImage/tmoFattal02.cpp
+				  FreeImage/tmoReinhard05.cpp
+				  FreeImage/ToneMapping.cpp
+				  FreeImage/Conversion.cpp
+				  Metadata/Exif.cpp
+				  Metadata/FIRational.cpp
+				  Metadata/FreeImageTag.cpp
+				  Metadata/IPTC.cpp
+				  Metadata/TagConversion.cpp
+				  Metadata/TagLib.cpp
+				  FreeImage/CacheFile.cpp
+				  FreeImage/MultiPage.cpp
+				  FreeImage/LFPQuantizer.cpp
+				  FreeImage/NNQuantizer.cpp
+				  FreeImage/WuQuantizer.cpp
+				  FreeImage/BitmapAccess.cpp
+				  FreeImage/ColorLookup.cpp
+				  FreeImage/FreeImage.cpp
+				  FreeImage/FreeImageIO.cpp
+				  FreeImage/GetType.cpp
+				  FreeImage/MemoryIO.cpp
+				  FreeImage/PixelAccess.cpp
+				  FreeImageToolkit/Background.cpp
+				  FreeImageToolkit/BSplineRotate.cpp
+				  FreeImageToolkit/Channels.cpp
+				  FreeImageToolkit/ClassicRotate.cpp
+				  FreeImageToolkit/Colors.cpp
+				  FreeImageToolkit/CopyPaste.cpp
+				  FreeImageToolkit/Display.cpp
+				  FreeImageToolkit/Flip.cpp
+				  FreeImageToolkit/MultigridPoissonSolver.cpp
+				  FreeImageToolkit/Rescale.cpp
+				  FreeImageToolkit/Resize.cpp
+				  FreeImage/Plugin.cpp
+				  FreeImage/PluginBMP.cpp
+				  FreeImage/PluginICO.cpp
+				  )
+
+set(LIBS)
+				  
+if(FREE_IMAGE_HAS_JPEG)
+	list(APPEND freeImageSrcs FreeImageToolkit/JPEGTransform.cpp)
+	list(APPEND freeImageSrcs FreeImage/PluginJPEG.cpp)
+	list(APPEND LIBS LibJPEG)
+endif()
+
+if(FREE_IMAGE_HAS_TIFF)
+	list(APPEND freeImageSrcs Metadata/XTIFF.cpp)
+endif()
+
+if(FREE_IMAGE_HAS_PNG)
+	list(APPEND freeImageSrcs FreeImage/ZLibInterface.cpp)
+	list(APPEND freeImageSrcs FreeImage/PluginPNG.cpp)
+	list(APPEND LIBS png zlib)
+endif()
+
+__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
+								INC ${freeImageRoot}
+								LIB ${LIBS}
+								DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
+								INTERFACE ${freeImageRoot}
+								)
+								
+#set(freeImagePlusSrcs FreeImagePlus/fipImage.cpp
+#					  FreeImagePlus/fipMemoryIO.cpp
+#					  FreeImagePlus/fipMetadataFind.cpp
+#					  FreeImagePlus/fipMultiPage.cpp
+#					  FreeImagePlus/fipTag.cpp
+#					  FreeImagePlus/fipWinImage.cpp
+#					  FreeImagePlus/FreeImagePlus.cpp
+#					  )
+#__add_real_target(freeImagePlus dll SOURCE ${freeImagePlusSrcs}
+#									LIB freeImage
+#									INC ${freeImageRoot}
+#									INTERFACE ${freeImageRoot}
+#									)
+									
+#__set_folder_targets(freeImage TARGET freeImage freeImagePlus)
