@@ -96,3 +96,10 @@ __add_real_target(freeImage dll SOURCE ${freeImageSrcs}
 #									)
 									
 #__set_folder_targets(freeImage TARGET freeImage freeImagePlus)
+
+if(INSTALL_FREE_IMAGE)
+	INSTALL(TARGETS freeImage
+				LIBRARY DESTINATION lib
+				ARCHIVE DESTINATION .
+				RUNTIME DESTINATION bin)
+endif()
