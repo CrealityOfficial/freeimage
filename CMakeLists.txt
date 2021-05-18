@@ -103,3 +103,8 @@ if(INSTALL_FREE_IMAGE)
 				ARCHIVE DESTINATION .
 				RUNTIME DESTINATION bin)
 endif()
+
+if(CC_INSTALL_FREEIMAGE)
+	file(GLOB PUBLIC_HEADERS *.h)
+	__install_inc_files(freeImage SOURCE ${PUBLIC_HEADERS})
+endif()	
