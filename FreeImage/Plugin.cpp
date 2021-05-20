@@ -397,6 +397,27 @@ FreeImage_LoadFromHandle(FREE_IMAGE_FORMAT fif, FreeImageIO *io, fi_handle handl
 	return NULL;
 }
 
+FIBITMAP* DLL_CALLCONV
+FreeImage_LoadFD(FREE_IMAGE_FORMAT fif, int fd, int flags) {
+	FreeImageIO io;
+	SetDefaultIO(&io);
+
+	FILE* handle = fdopen(fd, "r");
+
+	if (handle) {
+		FIBITMAP* bitmap = FreeImage_LoadFromHandle(fif, &io, (fi_handle)handle, flags);
+
+		fclose(handle);
+
+		return bitmap;
+	}
+	else {
+		FreeImage_OutputMessageProc((int)fif, "FreeImage_Load: failed to open file %d", fd);
+	}
+
+	return NULL;
+}
+
 FIBITMAP * DLL_CALLCONV
 FreeImage_Load(FREE_IMAGE_FORMAT fif, const char *filename, int flags) {
 	FreeImageIO io;
