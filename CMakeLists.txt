@@ -80,22 +80,6 @@ __add_real_target(freeImage dll SOURCE ${freeImageSrcs}
 								DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
 								INTERFACE ${freeImageRoot}
 								)
-								
-#set(freeImagePlusSrcs FreeImagePlus/fipImage.cpp
-#					  FreeImagePlus/fipMemoryIO.cpp
-#					  FreeImagePlus/fipMetadataFind.cpp
-#					  FreeImagePlus/fipMultiPage.cpp
-#					  FreeImagePlus/fipTag.cpp
-#					  FreeImagePlus/fipWinImage.cpp
-#					  FreeImagePlus/FreeImagePlus.cpp
-#					  )
-#__add_real_target(freeImagePlus dll SOURCE ${freeImagePlusSrcs}
-#									LIB freeImage
-#									INC ${freeImageRoot}
-#									INTERFACE ${freeImageRoot}
-#									)
-									
-#__set_folder_targets(freeImage TARGET freeImage freeImagePlus)
 
 if(INSTALL_FREE_IMAGE)
 	INSTALL(TARGETS freeImage
