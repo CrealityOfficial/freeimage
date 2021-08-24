@@ -74,12 +74,26 @@ if(FREE_IMAGE_HAS_PNG)
 	list(APPEND LIBS png zlib)
 endif()
 
-__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
-								INC ${freeImageRoot}
-								LIB ${LIBS}
-								DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
-								INTERFACE ${freeImageRoot}
-								)
+if(ANDROID)
+find_library(log-lib log)
+list(APPEND LIBS ${log-lib})
+endif()
+
+if(STATIC_FREEIMAGE)
+	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
+									INC ${freeImageRoot}
+									LIB ${LIBS}
+									DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
+									INTERFACE ${freeImageRoot}
+									)
+else()
+	__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
+									INC ${freeImageRoot}
+									LIB ${LIBS}
+									DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
+									INTERFACE ${freeImageRoot}
+									)
+endif()
 
 if(INSTALL_FREE_IMAGE)
 	INSTALL(TARGETS freeImage

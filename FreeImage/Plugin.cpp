@@ -40,6 +40,13 @@
 
 #include "../Metadata/FreeImageTag.h"
 
+
+#if defined(__ANDROID__)
+#include <android/log.h>
+#define  LOG_TAG    "FreeImage"
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#endif
 // =====================================================================
 
 using namespace std;
@@ -239,6 +246,7 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 			s_plugins->AddNode(InitBMP);
 			s_plugins->AddNode(InitICO);
 			s_plugins->AddNode(InitJPEG);
+			s_plugins->AddNode(InitPNG);
 			//s_plugins->AddNode(InitJNG);
 			//s_plugins->AddNode(InitKOALA);
 			//s_plugins->AddNode(InitIFF);
@@ -249,7 +257,6 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 			//s_plugins->AddNode(InitPCX);
 			//s_plugins->AddNode(InitPNM, NULL, "PGM", "Portable Greymap (ASCII)", "pgm", "^P2");
 			//s_plugins->AddNode(InitPNM, NULL, "PGMRAW", "Portable Greymap (RAW)", "pgm", "^P5");
-			s_plugins->AddNode(InitPNG);
 			//s_plugins->AddNode(InitPNM, NULL, "PPM", "Portable Pixelmap (ASCII)", "ppm", "^P3");
 			//s_plugins->AddNode(InitPNM, NULL, "PPMRAW", "Portable Pixelmap (RAW)", "ppm", "^P6");
 			//s_plugins->AddNode(InitRAS);
@@ -413,6 +420,10 @@ FreeImage_LoadFD(FREE_IMAGE_FORMAT fif, int fd, int flags) {
 	}
 	else {
 		FreeImage_OutputMessageProc((int)fif, "FreeImage_Load: failed to open file %d", fd);
+
+#if defined(__ANDROID__)
+		LOGI("FreeImage_LoadFD load [ %d ] error for: %s \n", fd, strerror(errno));
+#endif
 	}
 
 	return NULL;
@@ -678,6 +689,10 @@ FreeImage_FIFSupportsReading(FREE_IMAGE_FORMAT fif) {
 
 		return (node != NULL) ? node->m_plugin->load_proc != NULL : FALSE;
 	}
+
+#if defined(__ANDROID__)
+	LOGI("FreeImage_FIFSupportsReading Not supported format. %d\n", (int)fif);
+#endif
 
 	return FALSE;
 }
