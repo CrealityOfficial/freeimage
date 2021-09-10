@@ -74,6 +74,11 @@ if(FREE_IMAGE_HAS_PNG)
 	list(APPEND LIBS png zlib)
 endif()
 
+if(ANDROID)
+find_library(log-lib log)
+list(APPEND LIBS ${log-lib})
+endif()
+
 if(STATIC_FREEIMAGE)
 	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
