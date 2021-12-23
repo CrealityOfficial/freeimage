@@ -103,6 +103,5 @@ if(INSTALL_FREE_IMAGE)
 endif()
 
 if(CC_INSTALL_FREEIMAGE)
-	file(GLOB PUBLIC_HEADERS *.h)
-	__install_inc_files(freeImage SOURCE ${PUBLIC_HEADERS})
+	__install_directory_specif(${CMAKE_CURRENT_SOURCE_DIR}/ freeImage)
 endif()	
