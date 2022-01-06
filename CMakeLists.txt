@@ -75,8 +75,8 @@ if(FREE_IMAGE_HAS_PNG)
 endif()
 
 if(ANDROID)
-find_library(log-lib log)
-list(APPEND LIBS ${log-lib})
+	find_library(log-lib log)
+	list(APPEND LIBS ${log-lib})
 endif()
 
 if(STATIC_FREEIMAGE)
