@@ -57,7 +57,7 @@ set(freeImageSrcs FreeImage/Conversion.cpp
 				  )
 
 set(LIBS)
-				  
+set(DEFS Z_PREFIX)				  
 if(FREE_IMAGE_HAS_JPEG)
 	list(APPEND freeImageSrcs FreeImageToolkit/JPEGTransform.cpp)
 	list(APPEND freeImageSrcs FreeImage/PluginJPEG.cpp)
