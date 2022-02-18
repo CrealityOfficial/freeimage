@@ -57,7 +57,7 @@ set(freeImageSrcs FreeImage/Conversion.cpp
 				  )
 
 set(LIBS)
-set(DEFS Z_PREFIX)				  
+set(DEFS Z_PREFIX FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE)				  
 if(FREE_IMAGE_HAS_JPEG)
 	list(APPEND freeImageSrcs FreeImageToolkit/JPEGTransform.cpp)
 	list(APPEND freeImageSrcs FreeImage/PluginJPEG.cpp)
@@ -83,14 +83,14 @@ if(STATIC_FREEIMAGE)
 	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
-									DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
+									DEF ${DEFS}
 									INTERFACE ${freeImageRoot}
 									)
 else()
 	__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
-									DEF FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE
+									DEF ${DEFS}
 									INTERFACE ${freeImageRoot}
 									)
 endif()
