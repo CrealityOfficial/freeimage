@@ -245,8 +245,12 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 			*/
 			s_plugins->AddNode(InitBMP);
 			s_plugins->AddNode(InitICO);
+			#ifdef FREE_IMAGE_HAS_JPEG_ENBALE
 			s_plugins->AddNode(InitJPEG);
+			#endif
+			#ifdef FREE_IMAGE_HAS_PNG_ENBALE
 			s_plugins->AddNode(InitPNG);
+			#endif
 			//s_plugins->AddNode(InitJNG);
 			//s_plugins->AddNode(InitKOALA);
 			//s_plugins->AddNode(InitIFF);
