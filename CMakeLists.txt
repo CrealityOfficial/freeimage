@@ -57,7 +57,12 @@ set(freeImageSrcs FreeImage/Conversion.cpp
 				  )
 
 set(LIBS)
-set(DEFS Z_PREFIX FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE)				  
+set(DEFS Z_PREFIX FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE)		
+
+if(TARGET LibJPEG)
+	set(FREE_IMAGE_HAS_JPEG 1)
+endif()
+		  
 if(FREE_IMAGE_HAS_JPEG)
 	add_definitions(-DFREE_IMAGE_HAS_JPEG_ENBALE)
 	list(APPEND freeImageSrcs FreeImageToolkit/JPEGTransform.cpp)
@@ -67,6 +72,10 @@ endif()
 
 if(FREE_IMAGE_HAS_TIFF)
 	list(APPEND freeImageSrcs Metadata/XTIFF.cpp)
+endif()
+
+if(TARGET png)
+	set(FREE_IMAGE_HAS_PNG 1)
 endif()
 
 if(FREE_IMAGE_HAS_PNG)
