@@ -239,18 +239,26 @@ FreeImage_Initialise(BOOL load_local_plugins_only) {
 		s_plugins = new(std::nothrow) PluginList;
 
 		if (s_plugins) {
+			FI_InitProc initBMP = InitBMP;
+			FI_InitProc initICO = InitICO;
+			FI_InitProc initJPEG = InitBMP;
+			FI_InitProc initPNG = InitBMP;
+
+#ifdef FREE_IMAGE_HAS_JPEG_ENBALE
+			initJPEG = InitJPEG;
+#endif
+#ifdef FREE_IMAGE_HAS_PNG_ENBALE
+			initPNG = InitPNG;
+#endif
+
 			/* NOTE : 
 			The order used to initialize internal plugins below MUST BE the same order 
 			as the one used to define the FREE_IMAGE_FORMAT enum. 
 			*/
-			s_plugins->AddNode(InitBMP);
-			s_plugins->AddNode(InitICO);
-			#ifdef FREE_IMAGE_HAS_JPEG_ENBALE
-			s_plugins->AddNode(InitJPEG);
-			#endif
-			#ifdef FREE_IMAGE_HAS_PNG_ENBALE
-			s_plugins->AddNode(InitPNG);
-			#endif
+			s_plugins->AddNode(initBMP);
+			s_plugins->AddNode(initICO);
+			s_plugins->AddNode(initJPEG);
+			s_plugins->AddNode(initPNG);
 			//s_plugins->AddNode(InitJNG);
 			//s_plugins->AddNode(InitKOALA);
 			//s_plugins->AddNode(InitIFF);
