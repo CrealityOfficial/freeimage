@@ -1,0 +1,6 @@
+[requires]
+zlib/0.0.2
+png/0.0.2
+openjpeg/0.0.2
+
+

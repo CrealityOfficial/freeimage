@@ -1,3 +1,7 @@
+__cc_find(Zlib)
+__cc_find(Png)
+__cc_find(OpenJpeg)
+
 set(FREE_IMAGE_HAS_TIFF 0)
 
 set(freeImageRoot ${CMAKE_CURRENT_SOURCE_DIR})
