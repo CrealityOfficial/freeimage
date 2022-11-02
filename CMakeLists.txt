@@ -95,14 +95,14 @@ if(ANDROID)
 endif()
 
 if(STATIC_FREEIMAGE)
-	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
+	__add_real_target(freeimage lib SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
 									DEF ${DEFS}
 									INTERFACE ${freeImageRoot}
 									)
 else()
-	__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
+	__add_real_target(freeimage dll SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
 									DEF ${DEFS}
@@ -111,7 +111,7 @@ else()
 endif()
 
 if(INSTALL_FREE_IMAGE)
-	INSTALL(TARGETS freeImage
+	INSTALL(TARGETS freeimage
 				LIBRARY DESTINATION lib
 				ARCHIVE DESTINATION .
 				RUNTIME DESTINATION bin)
