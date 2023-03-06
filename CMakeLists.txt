@@ -90,7 +90,7 @@ if(ANDROID)
 	list(APPEND LIBS ${log-lib})
 endif()
 
-if(STATIC_FREEIMAGE)
+if(STATIC_FREEIMAGE OR CC_GLOBAL_FORCE_STATIC)
 	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
