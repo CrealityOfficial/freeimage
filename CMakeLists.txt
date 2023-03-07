@@ -95,6 +95,7 @@ if(ANDROID)
 endif()
 
 if(STATIC_FREEIMAGE OR CC_GLOBAL_FORCE_STATIC)
+	list(APPEND DEFS FREEIMAGE_LIB)
 	__add_real_target(freeimage lib SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
