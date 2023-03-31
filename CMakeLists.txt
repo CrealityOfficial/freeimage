@@ -100,6 +100,7 @@ if(STATIC_FREEIMAGE OR CC_GLOBAL_FORCE_STATIC)
 									INC ${freeImageRoot}
 									LIB ${LIBS}
 									DEF ${DEFS}
+									INTERFACE_DEF ${DEFS}
 									INTERFACE ${freeImageRoot}
 									)
 else()
