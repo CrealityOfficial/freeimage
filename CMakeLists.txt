@@ -96,7 +96,7 @@ endif()
 
 if(STATIC_FREEIMAGE OR CC_GLOBAL_FORCE_STATIC)
 	list(APPEND DEFS FREEIMAGE_LIB)
-	__add_real_target(freeimage lib SOURCE ${freeImageSrcs}
+	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
 									DEF ${DEFS}
@@ -104,7 +104,7 @@ if(STATIC_FREEIMAGE OR CC_GLOBAL_FORCE_STATIC)
 									INTERFACE ${freeImageRoot}
 									)
 else()
-	__add_real_target(freeimage dll SOURCE ${freeImageSrcs}
+	__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
 									INC ${freeImageRoot}
 									LIB ${LIBS}
 									DEF ${DEFS}
@@ -113,7 +113,7 @@ else()
 endif()
 
 if(INSTALL_FREE_IMAGE)
-	INSTALL(TARGETS freeimage
+	INSTALL(TARGETS freeImage
 				LIBRARY DESTINATION lib
 				ARCHIVE DESTINATION .
 				RUNTIME DESTINATION bin)
