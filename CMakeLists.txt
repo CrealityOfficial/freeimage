@@ -1,6 +1,7 @@
-__cc_find(Zlib)
-__cc_find(Png)
-__cc_find(OpenJpeg)
+__cc_find(png_static)
+__assert_target(png_static)
+
+__cc_find(open_jpeg)
 
 set(FREE_IMAGE_HAS_TIFF 0)
 
@@ -61,9 +62,9 @@ set(freeImageSrcs FreeImage/Conversion.cpp
 				  )
 
 set(LIBS)
-set(DEFS Z_PREFIX FREEIMAGE_EXPORTS _CRT_SECURE_NO_DEPRECATE)		
+set(DEFS _CRT_SECURE_NO_DEPRECATE)		
 
-if(TARGET LibJPEG)
+if(TARGET open_jpeg)
 	set(FREE_IMAGE_HAS_JPEG 1)
 endif()
 		  
@@ -71,7 +72,7 @@ if(FREE_IMAGE_HAS_JPEG)
 	add_definitions(-DFREE_IMAGE_HAS_JPEG_ENBALE)
 	list(APPEND freeImageSrcs FreeImageToolkit/JPEGTransform.cpp)
 	list(APPEND freeImageSrcs FreeImage/PluginJPEG.cpp)
-	list(APPEND LIBS LibJPEG)
+	list(APPEND LIBS open_jpeg)
 endif()
 
 if(FREE_IMAGE_HAS_TIFF)
@@ -86,7 +87,7 @@ if(FREE_IMAGE_HAS_PNG)
 	add_definitions(-DFREE_IMAGE_HAS_PNG_ENBALE)
 	list(APPEND freeImageSrcs FreeImage/ZLibInterface.cpp)
 	list(APPEND freeImageSrcs FreeImage/PluginPNG.cpp)
-	list(APPEND LIBS png zlib)
+	list(APPEND LIBS png_static)
 endif()
 
 if(ANDROID)
@@ -94,31 +95,14 @@ if(ANDROID)
 	list(APPEND LIBS ${log-lib})
 endif()
 
-if(STATIC_FREEIMAGE OR CC_GLOBAL_FORCE_STATIC)
-	list(APPEND DEFS FREEIMAGE_LIB)
-	__add_real_target(freeImage lib SOURCE ${freeImageSrcs}
-									INC ${freeImageRoot}
-									LIB ${LIBS}
-									DEF ${DEFS}
-									INTERFACE_DEF ${DEFS}
-									INTERFACE ${freeImageRoot}
-									)
-else()
-	__add_real_target(freeImage dll SOURCE ${freeImageSrcs}
-									INC ${freeImageRoot}
-									LIB ${LIBS}
-									DEF ${DEFS}
-									INTERFACE ${freeImageRoot}
-									)
-endif()
+__add_real_target(freeimage_static lib SOURCE ${freeImageSrcs}
+								INC ${freeImageRoot}
+								ILIB ${LIBS}
+								DEF ${DEFS} FREEIMAGE_LIB
+								INTERFACE_DEF FREEIMAGE_LIB
+								INTERFACE ${freeImageRoot}
+								)
 
-if(INSTALL_FREE_IMAGE)
-	INSTALL(TARGETS freeImage
-				LIBRARY DESTINATION lib
-				ARCHIVE DESTINATION .
-				RUNTIME DESTINATION bin)
-endif()
-
-if(CC_INSTALL_FREEIMAGE)
-	__install_directory_specif(${CMAKE_CURRENT_SOURCE_DIR}/ freeImage)
+if(CC_INSTALL_FREEIMAGE_STATIC)
+	__install_directory_specif(${CMAKE_CURRENT_SOURCE_DIR}/FreeImage freeimage)
 endif()	
