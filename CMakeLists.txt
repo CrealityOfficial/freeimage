@@ -104,5 +104,5 @@ __add_real_target(freeimage_static lib SOURCE ${freeImageSrcs}
 								)
 
 if(CC_INSTALL_FREEIMAGE_STATIC)
-	__install_directory_specif(${CMAKE_CURRENT_SOURCE_DIR}/FreeImage freeimage)
+	__install_directory_specif(${CMAKE_CURRENT_SOURCE_DIR}/ freeimage)
 endif()	
